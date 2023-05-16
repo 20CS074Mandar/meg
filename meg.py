@@ -1,1 +1,0 @@
-HI  I am meg . I am ML enthu but I hate programming
