@@ -11,23 +11,21 @@ pipeline {
 
         stage('Test') {
             steps {
-                bat 'phpunit --log-junit test-results.xml'
-            }
-            post {
-                always {
-                    junit 'test-results.xml'
-                }
+                sh 'composer update'
+                sh 'vendor/bin/phpunit'
+                sh "docker-compose run --rm php-environment phpunit"
             }
         }
+
         stage('Deploy') {
             steps {
-                bat "docker-compose up -d"
+                sh "docker-compose up -d"
             }
         }
 
         stage('Cleanup') {
             steps {
-                bat "docker-compose down"
+                sh "docker-compose down"
             }
         }
     }
