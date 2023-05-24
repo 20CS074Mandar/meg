@@ -3,12 +3,13 @@ services:
   php-environment:
     container_name: php-apache
     build:
-      context: ./php
+      context: ./src
       dockerfile: Dockerfile
     depends_on:
       - mariadb
     volumes:
-      - ./php:/var/www/html/
+      - ./src:/var/www/html/
+      - ./tests:/var/www/html/tests
     ports:
       - 8000:80
   mariadb:
@@ -22,13 +23,3 @@ services:
       MYSQL_PASSWORD: root
     ports:
       - "9906:3306"
-  # phpmyadmin:
-  #   image: phpmyadmin
-  #   container_name: phpmyadmin
-  #   links:
-  #     - mariadb
-  #   environment:
-  #     PMA_HOST: mariadb
-  #   restart: always
-  #   ports:
-  #     - 8081:80
